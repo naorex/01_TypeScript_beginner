@@ -1,6 +1,6 @@
 /* ストップウォッチ */
 #stopwatch {
-  background-image: url(stopwatch.png);
+  background: url(stopwatch.png) no-repeat left top/contain;
   width: 480px;
   height: 540px;
   position: fixed;
@@ -44,5 +44,5 @@
   height: 100px;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
 }

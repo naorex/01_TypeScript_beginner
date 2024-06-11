@@ -1,26 +1,18 @@
 // ==============================
-// グローバル変数の初期化
+// グローバル変数の初期化と宣言
 
 // スタートからの経過時間（ミリ秒）
 let TimeCount: number = 0; // スタートボタンを押すと増えていく変数
-
 // 計測状態（計測中:true, 停止中:false）
 let isRunning: boolean = false; // タイマーが働いているかどうかを記憶させる変数
-
 // タイマーの識別ID
 let timerID: number = 0;
-
 // カウント表示部
 const elmCount: HTMLElement = document.querySelector("#count")!;
-
 // スタートボタン
 const elmStart: HTMLElement = document.querySelector("#start")!;
-
 // リセットボタン
 const elmReset: HTMLElement = document.querySelector("#reset")!;
-
-// ==============================
-// グローバル変数の宣言
 
 // ==============================
 // イベントハンドラ
@@ -38,10 +30,7 @@ const onStart = () => {};
 const onReset = () => {};
 
 // ==============================
-// イベントハンドラを定義
-
-// ==============================
-// イベントリスナー
+// イベントリスナーを設定
 
 // ページの読み込み完了イベント
 window.addEventListener("load", onPageLoad);
@@ -53,14 +42,29 @@ elmStart.addEventListener("click", onStart);
 elmReset.addEventListener("click", onReset);
 
 // ==============================
-// イベントリスナーを設定
-
-// ==============================
 // ユーザー定義関数
 
 // 描画更新
 function updateView() {
-  /*処理*/
+  // 最大表示時間を超えない制限
+  if (TimeCount > 60 * 60 * 1000 - 1) {
+    TimeCount = 60 * 60 * 1000 - 1; // 59:59 99 とする
+  }
+  // 経過時間の分と求める
+  const mm: string = Math.floor(TimeCount / 1000 / 60)
+    .toString()
+    .padStart(2, "0");
+  // 経過時間の秒を求める
+  const ss: string = (Math.floor(TimeCount / 1000) % 60)
+    .toString()
+    .padStart(2, "0");
+  // 経過時間のミリ秒を求める
+  const ms: string = (TimeCount % 1000).toString().padStart(3, "0").slice(0, 2);
+  // 表示する文字列を編集
+  const count: string = mm + ":" + ss + "<small>" + ms;
+  ("</small>");
+  // カウントの表示を更新
+  elmCount.innerHTML = count;
 }
 
 // ==============================
