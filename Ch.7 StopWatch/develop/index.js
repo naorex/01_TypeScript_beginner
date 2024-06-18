@@ -1,7 +1,7 @@
 // ==============================
 // グローバル変数の初期化と宣言
 // スタートからの経過時間（ミリ秒）
-let TimeCount = 0; // スタートボタンを押すと増えていく変数
+let timeCount = 0; // スタートボタンを押すと増えていく変数
 // 計測状態（計測中:true, 停止中:false）
 let isRunning = false; // タイマーが働いているかどうかを記憶させる変数
 // タイマーの識別ID
@@ -20,9 +20,27 @@ const onPageLoad = () => {
     updateView();
 };
 // スタート処理
-const onStart = () => { };
+const onStart = () => {
+    // 停止中の場合
+    if (isRunning === false) {
+        // タイマー起動
+        startTimer();
+    }
+    // 計測中の場合
+    else {
+        // タイマーを停止
+        stopTimer();
+    }
+};
 // リセット処理
-const onReset = () => { };
+const onReset = () => {
+    // タイマーを停止
+    stopTimer();
+    // カウントをリセット
+    resetCount();
+    // 描画を更新
+    updateView();
+};
 // ==============================
 // イベントリスナーを設定
 // ページの読み込み完了イベント
@@ -36,24 +54,46 @@ elmReset.addEventListener("click", onReset);
 // 描画更新
 function updateView() {
     // 最大表示時間を超えない制限
-    if (TimeCount > 60 * 60 * 1000 - 1) {
-        TimeCount = 60 * 60 * 1000 - 1; // 59:59 99 とする
+    if (timeCount > 60 * 60 * 1000 - 1) {
+        timeCount = 60 * 60 * 1000 - 1; // 59:59 99 とする
     }
     // 経過時間の分と求める
-    const mm = Math.floor(TimeCount / 1000 / 60)
+    const mm = Math.floor(timeCount / 1000 / 60)
         .toString()
         .padStart(2, "0");
     // 経過時間の秒を求める
-    const ss = (Math.floor(TimeCount / 1000) % 60)
+    const ss = (Math.floor(timeCount / 1000) % 60)
         .toString()
         .padStart(2, "0");
     // 経過時間のミリ秒を求める
-    const ms = (TimeCount % 1000).toString().padStart(3, "0").slice(0, 2);
+    const ms = (timeCount % 1000).toString().padStart(3, "0").slice(0, 2);
     // 表示する文字列を編集
     const count = mm + ":" + ss + "<small>" + ms;
     ("</small>");
     // カウントの表示を更新
     elmCount.innerHTML = count;
 }
-// ==============================
-// その他の関数
+// 計測スタート
+function startTimer() {
+    // 指定された時間ごとにカウントを更新
+    timerID = setInterval(() => {
+        // 経過時間を加算
+        timeCount += 10;
+        // 描画を更新
+        updateView();
+    }, 10);
+    // 計測状態を『計測中』に変更
+    isRunning = true;
+}
+// 計測ストップ
+function stopTimer() {
+    // タイマーを停止
+    clearInterval(timerID);
+    // 計測状態を「停止中」に変更
+    isRunning = false;
+}
+// カウントをリセット
+function resetCount() {
+    // 経過時間を初期化
+    timeCount = 0;
+}

@@ -2,7 +2,7 @@
 // グローバル変数の初期化と宣言
 
 // スタートからの経過時間（ミリ秒）
-let TimeCount: number = 0; // スタートボタンを押すと増えていく変数
+let timeCount: number = 0; // スタートボタンを押すと増えていく変数
 // 計測状態（計測中:true, 停止中:false）
 let isRunning: boolean = false; // タイマーが働いているかどうかを記憶させる変数
 // タイマーの識別ID
@@ -38,7 +38,14 @@ const onStart = () => {
 };
 
 // リセット処理
-const onReset = () => {};
+const onReset = () => {
+  // タイマーを停止
+  stopTimer();
+  // カウントをリセット
+  resetCount();
+  // 描画を更新
+  updateView();
+};
 
 // ==============================
 // イベントリスナーを設定
@@ -58,19 +65,19 @@ elmReset.addEventListener("click", onReset);
 // 描画更新
 function updateView() {
   // 最大表示時間を超えない制限
-  if (TimeCount > 60 * 60 * 1000 - 1) {
-    TimeCount = 60 * 60 * 1000 - 1; // 59:59 99 とする
+  if (timeCount > 60 * 60 * 1000 - 1) {
+    timeCount = 60 * 60 * 1000 - 1; // 59:59 99 とする
   }
   // 経過時間の分と求める
-  const mm: string = Math.floor(TimeCount / 1000 / 60)
+  const mm: string = Math.floor(timeCount / 1000 / 60)
     .toString()
     .padStart(2, "0");
   // 経過時間の秒を求める
-  const ss: string = (Math.floor(TimeCount / 1000) % 60)
+  const ss: string = (Math.floor(timeCount / 1000) % 60)
     .toString()
     .padStart(2, "0");
   // 経過時間のミリ秒を求める
-  const ms: string = (TimeCount % 1000).toString().padStart(3, "0").slice(0, 2);
+  const ms: string = (timeCount % 1000).toString().padStart(3, "0").slice(0, 2);
   // 表示する文字列を編集
   const count: string = mm + ":" + ss + "<small>" + ms;
   ("</small>");
@@ -92,7 +99,15 @@ function startTimer() {
 }
 
 // 計測ストップ
-function stopTimer() {}
+function stopTimer() {
+  // タイマーを停止
+  clearInterval(timerID);
+  // 計測状態を「停止中」に変更
+  isRunning = false;
+}
 
-// ==============================
-// その他の関数
+// カウントをリセット
+function resetCount() {
+  // 経過時間を初期化
+  timeCount = 0;
+}
