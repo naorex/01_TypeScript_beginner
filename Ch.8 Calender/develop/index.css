@@ -1,0 +1,113 @@
+/* カレンダー */
+.cal {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.8;
+  box-shadow: 1px 2px 6px 0px rgb(0 0 0 / 20%);
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+}
+
+/* ヘッダー */
+.cal__header {
+  background-color: #14b0eb;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+}
+
+/* 矢印マーク */
+.cal__arrow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+}
+
+.cal__arrow::before {
+  content: "";
+  border: solid #ffffff;
+  border-width: 2px 2px 0 0;
+  width: 0.5em;
+  height: 0.5em;
+  display: block;
+}
+
+/* 前月移動ナビ */
+.cal__prev::before {
+  transform: rotate(-135deg);
+}
+
+/* 翌月移動ナビ */
+.cal__next::before {
+  transform: rotate(45deg);
+}
+
+/* 年月表示部 */
+.cal__title {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 日付の表 */
+.cal__body table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* セルの基本スタイル */
+.cal__body th,
+.cal__body td {
+  padding: 0.5em 1em;
+  text-align: center;
+  font-weight: normal;
+}
+
+/* 曜日の基本スタイル */
+.cal__week {
+  color: #cccccc;
+}
+
+/* 土曜日 */
+.cal__week--sat {
+  color: #006fd0;
+}
+
+/* 日曜日 */
+.cal__week--sun {
+  color: #cd0042;
+}
+
+/* 日付の基本スタイル */
+.cal__day {
+  color: #333333;
+}
+
+/* 前月の日付 */
+.cal__day--prev {
+  color: #eeeeee;
+}
+
+/* 翌月の日付 */
+.cal__day--next {
+  color: #eeeeee;
+}
+
+/* 土曜日 */
+.cal__day--sat {
+  color: #006fd0;
+}
+
+/* 日曜日 */
+.cal__day--sun {
+  color: #cd0042;
+}
